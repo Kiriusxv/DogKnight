@@ -25,7 +25,8 @@ public class PlayerController : MonoBehaviour
 
         stopDistance = agent.stoppingDistance;
     }
-    void Start()
+
+    void OnEnable()
     {
         MouseManager.Instance.OnMouseClicked += MoveToTarget;
         MouseManager.Instance.OnEnemyClicked += EventAttack;
@@ -33,7 +34,20 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.RigisterPlayer(characterStats);
     }
 
-   
+    void Start()
+    {
+        SaveManager.Instance.LoadPlayerData();
+
+    }
+
+    void OnDisable()
+    {
+        if(!MouseManager.IsInitialized) return;
+        MouseManager.Instance.OnMouseClicked -= MoveToTarget;
+        MouseManager.Instance.OnEnemyClicked -= EventAttack;
+    }
+
+
     void Update()
     {
         isDead = characterStats.CurrentHealth == 0;

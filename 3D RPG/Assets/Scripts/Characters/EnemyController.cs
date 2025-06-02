@@ -86,7 +86,7 @@ public class EnemyController : MonoBehaviour,IEndGameObserver
     //}
     void OnDisable()
     {
-        if(!GameManager.IsInitialized)
+        if(GameManager.IsInitialized)
         {
             GameManager.Instance.RemoveObserver(this);
         }
