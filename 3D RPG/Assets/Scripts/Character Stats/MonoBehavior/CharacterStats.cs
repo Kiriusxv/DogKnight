@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,12 +6,21 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class CharacterStats : MonoBehaviour
 {
+    public event Action<int,int> UpdateHealthBarOnAttack;
+    public CharacterData_SO templateData;
     public CharacterData_SO characterData;
 
     public AttackData_SO attackData;
 
     [HideInInspector]
     public bool isCritical;
+    private void Awake()
+    { 
+        if(templateData != null)
+        {
+            characterData=Instantiate(templateData);
+        }
+    }
     public int MaxHealth 
     { 
         get
@@ -73,14 +83,20 @@ public class CharacterStats : MonoBehaviour
         int damage = Mathf.Max(attacker.CurrentDamage() - defener.CurrentDefence,0);
         CurrentHealth = Mathf.Max(CurrentHealth - damage, 0);
 
-        if (isCritical)
+        if (attacker.isCritical)
         {
             defener.GetComponent<Animator>().SetTrigger("Hit");
         }
         //TODO:Update Ui
+        UpdateHealthBarOnAttack?.Invoke(CurrentHealth, MaxHealth);
         //TODO:¾­Ñéupdate
     }
-
+    public void TakeDamage(int damage,CharacterStats defener)
+    {
+        int currentDamage = Mathf.Max(damage - defener.CurrentDefence, 0);
+        CurrentHealth = Mathf.Max (CurrentHealth - currentDamage, 0);
+        UpdateHealthBarOnAttack?.Invoke(CurrentHealth, MaxHealth);
+    }
     private int CurrentDamage()
     {
         float coreDamege = UnityEngine.Random.Range(attackData.minDamage, attackData.maxDamage);

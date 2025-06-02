@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public enum EnemyStates { GUARD,PATROL,CHASE,DEAD}
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent (typeof(CharacterStats))]
 public class EnemyController : MonoBehaviour,IEndGameObserver
 {
     private EnemyStates enemyStates;
@@ -15,7 +16,7 @@ public class EnemyController : MonoBehaviour,IEndGameObserver
 
     private Collider coll;
 
-    private CharacterStats characterStats;
+    protected CharacterStats characterStats;
 
     [Header("Basic Settings")]
 
@@ -26,7 +27,7 @@ public class EnemyController : MonoBehaviour,IEndGameObserver
 
     private float speed;
 
-    private GameObject attackTarget;
+    protected GameObject attackTarget;
 
     public float lookAtTime;
 
@@ -75,15 +76,21 @@ public class EnemyController : MonoBehaviour,IEndGameObserver
             enemyStates=EnemyStates.PATROL;
             GetNewWayPoint();
         }
-    }
-
-    void OnEnable()
-    {
+        //FIXME:场景切换后修改
         GameManager.Instance.AddObserver(this);
     }
+    //切换场景时启用
+    //void OnEnable()
+    //{
+    //    GameManager.Instance.AddObserver(this);
+    //}
     void OnDisable()
     {
-        GameManager.Instance.RemoveObserver(this);
+        if(!GameManager.IsInitialized)
+        {
+            GameManager.Instance.RemoveObserver(this);
+        }
+        
     }
     private void Update()
     {
@@ -200,7 +207,8 @@ public class EnemyController : MonoBehaviour,IEndGameObserver
                 break;
             case EnemyStates.DEAD:
                 coll.enabled= false;
-                agent.enabled = false;
+                //agent.enabled = false;
+                agent.radius = 0;
                 Destroy(gameObject, 2f);
                 break;
         }
@@ -271,7 +279,7 @@ public class EnemyController : MonoBehaviour,IEndGameObserver
     //Animation Event
     void Hit()
     {
-        if (attackTarget != null)
+        if (attackTarget != null&& transform.isFacingTarget(attackTarget.transform))
         {
             var targetStats = attackTarget.GetComponent<CharacterStats>();
             targetStats.TakeDamage(characterStats, targetStats);

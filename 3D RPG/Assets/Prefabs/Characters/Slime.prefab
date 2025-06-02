@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 3437560893200313493}
   - component: {fileID: 1005483115066958822}
   - component: {fileID: 6331257167169627315}
+  - component: {fileID: 4610598996937853628}
+  - component: {fileID: 8704587552625146582}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Enemy
@@ -35,6 +37,7 @@ Transform:
   m_Children:
   - {fileID: 5827734938845482911}
   - {fileID: 2829979750519493856}
+  - {fileID: 1150574280781284007}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 33.626, z: 0}
 --- !u!95 &8923127656877275079
@@ -93,6 +96,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sightRadius: 8
+  isGuard: 0
+  lookAtTime: 0
+  patrolRange: 0
 --- !u!65 &6331257167169627315
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -114,6 +120,39 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &4610598996937853628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113057375021950170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4add8f9d6b5c9334395c814a1db2f135, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  templateData: {fileID: 11400000, guid: 18714eb97f7be9b428ac01e332f503a2, type: 2}
+  characterData: {fileID: 0}
+  attackData: {fileID: 11400000, guid: b9b0d63bbecf0ec4a8e0e8c6de88bbd8, type: 2}
+  isCritical: 0
+--- !u!114 &8704587552625146582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113057375021950170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7efdee25019d7147b5fcf3c10c34fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthUIPrefab: {fileID: 9179359448559241170, guid: de28d74e1e1d3104f8db8850b3a82f43, type: 3}
+  barPoint: {fileID: 1150574280781284007}
+  alwaysVisible: 0
+  visibleTime: 0
+  timeLeft: 3
 --- !u!1 &191131298345012661
 GameObject:
   m_ObjectHideFlags: 0
@@ -239,6 +278,37 @@ Transform:
   - {fileID: 8703397740384659479}
   - {fileID: 2986063275600078227}
   m_Father: {fileID: 5525228900334606356}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2819435584308183114
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1150574280781284007}
+  m_Layer: 7
+  m_Name: HealthBar Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1150574280781284007
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819435584308183114}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3502635461409544103}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2946219131976132529
 GameObject:
